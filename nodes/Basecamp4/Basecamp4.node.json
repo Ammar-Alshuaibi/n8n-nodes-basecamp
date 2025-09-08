@@ -1,0 +1,18 @@
+{
+	"node": "n8n-nodes-base.basecamp4",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Development", "Developer Tools"],
+	"resources": {
+		"credentialDocumentation": [
+			{
+				"url": "https://github.com/basecamp/api/blob/master/sections/authentication.md"
+			}
+		],
+		"primaryDocumentation": [
+			{
+				"url": "https://github.com/basecamp/bc3-api"
+			}
+		]
+	}
+}
