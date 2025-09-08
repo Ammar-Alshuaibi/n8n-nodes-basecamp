@@ -37,7 +37,7 @@ import { returnAllField, returnFullResponseField } from './SharedFields';
 
 export class Basecamp4 implements INodeType {
 	description: INodeTypeDescription = {
-		displayName: 'Basecamp',
+		displayName: 'basecamp4',
 		name: 'basecamp4',
 		icon: 'file:Basecamp.svg',
 		group: ['transform'],
@@ -45,7 +45,7 @@ export class Basecamp4 implements INodeType {
 		subtitle: '={{$parameter["operation"]}}',
 		description: 'Interact with Basecamp API',
 		defaults: {
-			name: 'Basecamp',
+			name: 'basecamp4',
 		},
 		inputs: ['main'],
 		outputs: ['main'],
