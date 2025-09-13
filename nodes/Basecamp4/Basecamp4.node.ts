@@ -1,4 +1,4 @@
-import { INodeType, INodeTypeDescription } from 'n8n-workflow';
+import { INodeType, INodeTypeDescription, IExecuteFunctions, INodeExecutionData } from 'n8n-workflow';
 import { campfireFields, campfireOperations } from './descriptions/CampfireDescription';
 import { cardTableFields, cardTableOperations } from './descriptions/CardTableDescription';
 import { chatbotFields, chatbotOperations } from './descriptions/ChatbotDescription';
@@ -47,8 +47,8 @@ export class Basecamp4 implements INodeType {
 		defaults: {
 			name: 'basecamp4',
 		},
-		inputs: ['main'],
-		outputs: ['main'],
+		inputs: ['main'] as any,
+		outputs: ['main'] as any,
 		credentials: [
 			{
 				name: 'basecamp4OAuth2Api',
@@ -282,4 +282,35 @@ export class Basecamp4 implements INodeType {
 			...returnFullResponseField,
 		],
 	};
+
+	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
+		const items = this.getInputData();
+		const returnData: INodeExecutionData[] = [];
+
+		for (let i = 0; i < items.length; i++) {
+			try {
+				const responseData = await this.helpers.requestWithAuthentication.call(
+					this,
+					'basecamp4OAuth2Api',
+					{
+						...(this.getNodeParameter('requestOptions', i, {}) as any),
+					},
+				);
+
+				returnData.push({
+					json: responseData,
+				});
+			} catch (error) {
+				if (this.continueOnFail()) {
+					returnData.push({
+						json: { error: error.message },
+					});
+					continue;
+				}
+				throw error;
+			}
+		}
+
+		return [returnData];
+	}
 }
