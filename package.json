@@ -1,60 +1,55 @@
 {
-	"name": "@ammar.alshuaibi/n8n-nodes-basecamp4",
-	"version": "0.2.7",
-	"description": "Basecamp API Node for n8n",
-	"keywords": [
-		"n8n-community-node-package"
-	],
-	"license": "MIT",
-	"homepage": "",
-	"author": {
-		"name": "Ammar Alshuaibi",
-		"email": "ammar@smbdm.com"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/ammar-alshuaibi/n8n-nodes-basecamp.git"
-	},
-	"publishConfig": {
-		"access": "public"
-	},
-	"engines": {
-		"node": ">=18.10",
-		"pnpm": ">=9.1"
-	},
-	"packageManager": "pnpm@9.1.4",
-	"main": "index.js",
-	"scripts": {
-		"preinstall": "npx only-allow pnpm",
-		"build": "tsc && gulp build:icons",
-		"dev": "tsc --watch",
-		"format": "prettier nodes credentials --write",
-		"lint": "eslint nodes credentials package.json",
-		"lintfix": "eslint nodes credentials package.json --fix",
-		"prepublishOnly": "pnpm build && pnpm lint -c .eslintrc.prepublish.js nodes credentials package.json"
-	},
-	"files": [
-		"dist"
-	],
-	"n8n": {
-		"n8nNodesApiVersion": 1,
-		"credentials": [
-			"dist/credentials/Basecamp4OAuth2Api.credentials.js"
-		],
-		"nodes": [
-			"dist/nodes/Basecamp4/Basecamp4.node.js"
-		]
-	},
-	"devDependencies": {
-		"@typescript-eslint/parser": "^7.15.0",
-		"eslint": "^8.56.0",
-		"eslint-plugin-n8n-nodes-base": "^1.16.1",
-		"gulp": "^4.0.2",
-		"prettier": "^3.3.2",
-		"typescript": "^5.5.3"
-	},
-	"peerDependencies": {
-		"n8n-workflow": "*"
-	},
-	"dependencies": {}
+  "name": "n8n-nodes-basecamp4api",
+  "version": "1.0.0",
+  "description": "n8n node for Basecamp 3 API integration",
+  "keywords": [
+    "n8n",
+    "n8n-node",
+    "n8n-community-node-package",
+    "basecamp",
+    "project-management"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/Ammar-Alshuaibi/n8n-nodes-basecamp4api",
+  "author": {
+    "name": "Ammar Alshuaibi",
+    "email": "ammar.alshuaibi@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ammar-Alshuaibi/n8n-nodes-basecamp4api.git"
+  },
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "format": "prettier --write .",
+    "lint": "eslint .",
+    "prepublishOnly": "npm run build"
+  },
+  "files": [
+    "dist"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": [
+      "dist/credentials/BasecampApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/Basecamp/Basecamp.node.js"
+    ]
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "eslint": "^8.0.0",
+    "eslint-config-prettier": "^8.0.0",
+    "prettier": "^2.0.0",
+    "typescript": "~4.9.0"
+  },
+  "dependencies": {
+    "n8n-core": "^0.125.0",
+    "n8n-workflow": "^0.107.0"
+  }
 }
