@@ -51,131 +51,9 @@ This package includes nodes for:
 - Subscribe/unsubscribe from recordings
 - Manage notification preferences
 
-## Installation with Docker
+## Installation
 
-### Prerequisites
-- Docker and Docker Compose installed
-- Basic understanding of n8n workflows
-
-### Directory Structure
-
-Create the following directory structure on your host machine:
-
-```
-n8n-basecamp/
-├── docker-compose.yml
-├── .env
-├── data/                    # n8n data persistence
-├── nodes/                   # Custom nodes location
-│   └── @ammar.alshuaibi/
-│       └── n8n-nodes-basecamp/
-│           ├── dist/
-│           ├── package.json
-│           └── ...
-└── README.md
-```
-
-### Step 1: Download the Node Package
-
-1. Download or clone this repository
-2. Copy the entire package to your `nodes/@ammar.alshuaibi/n8n-nodes-basecamp/` directory
-
-```bash
-# Create the directory structure
-mkdir -p n8n-basecamp/nodes/@ammar.alshuaibi/
-
-# Copy the package (adjust source path as needed)
-cp -r /path/to/n8n-nodes-basecamp-main n8n-basecamp/nodes/@ammar.alshuaibi/n8n-nodes-basecamp
-```
-
-### Step 2: Create Environment File
-
-Create a `.env` file in your `n8n-basecamp` directory:
-
-```env
-# n8n Configuration
-N8N_BASIC_AUTH_ACTIVE=true
-N8N_BASIC_AUTH_USER=admin
-N8N_BASIC_AUTH_PASSWORD=your_secure_password_here
-
-# Basecamp API Configuration (optional - can be set per workflow)
-BASECAMP_CLIENT_ID=your_basecamp_client_id
-BASECAMP_CLIENT_SECRET=your_basecamp_client_secret
-BASECAMP_ACCOUNT_ID=your_basecamp_account_id
-
-# Timezone
-GENERIC_TIMEZONE=America/New_York
-
-# Security
-N8N_SECURE_COOKIE=false
-
-# Execution
-N8N_DEFAULT_BINARY_DATA_MODE=filesystem
-```
-
-### Step 3: Create Docker Compose File
-
-Use the provided `docker-compose.yml` below.
-
-### Step 4: Start n8n
-
-```bash
-cd n8n-basecamp
-docker-compose up -d
-```
-
-### Step 5: Access n8n
-
-- Open your browser and go to `http://localhost:5678`
-- Login with the credentials from your `.env` file
-- The Basecamp nodes should now be available in the node palette
-
-## Docker Compose Configuration
-
-```yaml
-version: '3.8'
-
-services:
-  n8n:
-    image: n8nio/n8n:latest
-    container_name: n8n-basecamp
-    restart: unless-stopped
-    ports:
-      - "5678:5678"
-    environment:
-      - N8N_BASIC_AUTH_ACTIVE=${N8N_BASIC_AUTH_ACTIVE}
-      - N8N_BASIC_AUTH_USER=${N8N_BASIC_AUTH_USER}
-      - N8N_BASIC_AUTH_PASSWORD=${N8N_BASIC_AUTH_PASSWORD}
-      - GENERIC_TIMEZONE=${GENERIC_TIMEZONE}
-      - N8N_SECURE_COOKIE=${N8N_SECURE_COOKIE}
-      - N8N_DEFAULT_BINARY_DATA_MODE=${N8N_DEFAULT_BINARY_DATA_MODE}
-      # Custom nodes path
-      - N8N_CUSTOM_EXTENSIONS=/home/node/.n8n/custom
-    volumes:
-      # Persist n8n data
-      - ./data:/home/node/.n8n
-      # Mount custom nodes
-      - ./nodes:/home/node/.n8n/custom/node_modules:ro
-    depends_on:
-      - postgres
-
-  postgres:
-    image: postgres:13
-    container_name: n8n-postgres
-    restart: unless-stopped
-    environment:
-      - POSTGRES_USER=n8n
-      - POSTGRES_PASSWORD=n8n_password
-      - POSTGRES_DB=n8n
-    volumes:
-      - ./postgres-data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-
-volumes:
-  postgres-data:
-  n8n-data:
-```
+Please refer to the [n8n documentation](https://docs.n8n.io/integrations/community-nodes/installation/) for instructions on how to install this node package.
 
 ## Basecamp API Setup
 
@@ -243,37 +121,15 @@ volumes:
 
 ### Node Not Appearing
 
-1. Check that the package is in the correct directory: `/home/node/.n8n/custom/node_modules/@ammar.alshuaibi/n8n-nodes-basecamp`
-2. Restart the n8n container: `docker-compose restart n8n`
-3. Check container logs: `docker-compose logs n8n`
+1. Check that the package is installed correctly in your n8n installation
+2. Restart n8n
+3. Check the n8n logs for any errors
 
 ### Authentication Issues
 
 1. Verify your Basecamp app credentials
 2. Ensure the redirect URI matches exactly
 3. Check that your Basecamp account ID is correct
-
-### Permission Errors
-
-1. Ensure proper file permissions on mounted volumes
-2. Check that the user running Docker has access to the directories
-
-## File Locations in Container
-
-- **n8n data**: `/home/node/.n8n`
-- **Custom nodes**: `/home/node/.n8n/custom/node_modules`
-- **Workflows**: `/home/node/.n8n/workflows`
-- **Credentials**: `/home/node/.n8n/credentials`
-
-## Environment Variables
-
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `N8N_BASIC_AUTH_ACTIVE` | Enable basic authentication | `true` |
-| `N8N_BASIC_AUTH_USER` | Basic auth username | `admin` |
-| `N8N_BASIC_AUTH_PASSWORD` | Basic auth password | Required |
-| `N8N_CUSTOM_EXTENSIONS` | Path to custom nodes | `/home/node/.n8n/custom` |
-| `GENERIC_TIMEZONE` | Default timezone | `UTC` |
 
 ## Support
 
